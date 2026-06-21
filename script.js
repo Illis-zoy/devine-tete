@@ -166,11 +166,10 @@ function handleOrientation(event) {
     return;
   }
 
-  // Correct : mouvement très marqué
-  const isCorrectTilt = beta < -130;
+  const isCorrectTilt = beta < -160 && gamma > 5 && gamma < 45;
 
-  // Passer : seuil plus strict qu’avant
-  const isPassTilt = gamma > -30 && beta > -30 && beta < 30;
+  const isPassTilt = gamma > -25 && beta > -30 && beta < 30;  
+
 
   if (isCorrectTilt) {
     correctAnswer();
