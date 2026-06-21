@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test inclinaison</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+      background: #f4f4f4;
+    }
+
+    h1 {
+      font-size: 32px;
+    }
+
+    button {
+      font-size: 22px;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 14px;
+      background: #222;
+      color: white;
+      margin: 20px 0;
+    }
+
+    .box {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    .value {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    #action {
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Test inclinaison</h1>
+
+  <p>Appuie sur le bouton, puis incline ton iPhone vers le haut ou vers le bas.</p>
+
+  <button id="permission-button">Autoriser les mouvements</button>
+
+  <div class="box">
+    <p>Beta : <span id="beta" class="value">?</span></p>
+    <p>Gamma : <span id="gamma" class="value">?</span></p>
+  </div>
+
+  <p id="action">Aucune action</p>
+
+  <script>
+    const permissionButton = document.getElementById("permission-button");
+    const betaElement = document.getElementById("beta");
+    const gammaElement = document.getElementById("gamma");
+    const actionElement = document.getElementById("action");
+
+    async function requestMotionPermission() {
+      if (
+        typeof DeviceOrientationEvent !== "undefined" &&
+        typeof DeviceOrientationEvent.requestPermission === "function"
+      ) {
+        const permission = await DeviceOrientationEvent.requestPermission();
+
+        if (permission === "granted") {
+          startListening();
+        } else {
+          actionElement.textContent = "Permission refusée";
+        }
+      } else {
+        startListening();
+      }
+    }
+
+    function startListening() {
+      actionElement.textContent = "Capteurs activés";
+
+      window.addEventListener("deviceorientation", function(event) {
+        const beta = event.beta;
+        const gamma = event.gamma;
+
+        betaElement.textContent = beta !== null ? beta.toFixed(1) : "?";
+        gammaElement.textContent = gamma !== null ? gamma.toFixed(1) : "?";
+
+        if (beta > 40) {
+          actionElement.textContent = "Inclinaison vers le bas";
+        } else if (beta < -20) {
+          actionElement.textContent = "Inclinaison vers le haut";
+        } else {
+          actionElement.textContent = "Position neutre";
+        }
+      });
+    }
+
+    permissionButton.addEventListener("click", requestMotionPermission);
+  </script>
+</body>
+</html>

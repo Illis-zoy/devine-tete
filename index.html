@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devine Tête</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <main class="app">
+    <h1>Devine Tête</h1>
+
+    <section id="start-screen" class="screen active">
+      <p class="intro">
+        Fais deviner le mot affiché à ton équipe.
+      </p>
+      <button id="start-button">Démarrer</button>
+    </section>
+
+    <section id="game-screen" class="screen">
+      <div class="top-bar">
+        <p>Temps : <span id="time">60</span>s</p>
+        <p>Score : <span id="score">0</span></p>
+      </div>
+
+      <div id="word-card">
+        <p id="word">Mot</p>
+      </div>
+
+      <div class="buttons">
+        <button id="pass-button" class="secondary">Passer</button>
+        <button id="correct-button">Correct</button>
+      </div>
+    </section>
+
+    <section id="end-screen" class="screen">
+      <h2>Partie terminée !</h2>
+      <p>Score final : <span id="final-score">0</span></p>
+      <button id="restart-button">Rejouer</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
