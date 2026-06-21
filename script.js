@@ -24,6 +24,7 @@ let currentWord = "";
 let motionEnabled = false;
 let gameIsRunning = false;
 let lastTiltActionTime = 0;
+let tiltReady=true;
 
 const startScreen = document.getElementById("start-screen");
 const gameScreen = document.getElementById("game-screen");
@@ -141,8 +142,8 @@ function handleOrientation(event) {
 
   const now = Date.now();
 
-  // Évite qu’un seul mouvement compte plusieurs fois
-  if (now - lastTiltActionTime < 1000) {
+  // Évite qu’un mouvement compte plusieurs fois trop vite
+  if (now - lastTiltActionTime < 900) {
     return;
   }
 
@@ -153,15 +154,32 @@ function handleOrientation(event) {
     Passer   : beta ≈ 0     gamma ≈ -22
   */
 
-  const isCorrectTilt = beta < -120;
-  const isPassTilt = gamma > -50 && beta > -60 && beta < 60;
+  // Le téléphone doit revenir en position neutre avant de compter un nouveau mouvement
+  const isNeutral = gamma < -70 && beta > -40 && beta < 40;
+
+  if (isNeutral) {
+    tiltReady = true;
+    return;
+  }
+
+  if (!tiltReady) {
+    return;
+  }
+
+  // Correct : mouvement très marqué
+  const isCorrectTilt = beta < -130;
+
+  // Passer : seuil plus strict qu’avant
+  const isPassTilt = gamma > -30 && beta > -30 && beta < 30;
 
   if (isCorrectTilt) {
     correctAnswer();
     lastTiltActionTime = now;
+    tiltReady = false;
   } else if (isPassTilt) {
     passWord();
     lastTiltActionTime = now;
+    tiltReady = false;
   }
 }
 
