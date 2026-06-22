@@ -11,22 +11,47 @@
   <main class="app">
     <h1>Devine Tête</h1>
 
+
     <section id="start-screen" class="screen active">
       <p class="intro">
-        Fais deviner le mot affiché à ton équipe.
+    Fais deviner le mot affiché à ton équipe.
       </p>
 
       <button id="motion-button">Autoriser l’inclinaison</button>
       <p id="motion-status">Inclinaison non activée</p>
 
+      <p class="category-label">Choisis une catégorie :</p>
+      <div id="category-buttons" class="category-grid"></div>
+
+      <div id="round-settings" class="hidden">
+        <p class="category-label">Nombre de manches par équipe :</p>
+        <div id="round-buttons" class="round-grid"></div>
+      </div>
+
+      <p class="category-label">Mode de jeu :</p>
+      <div id="team-buttons" class="team-grid"></div>
+
+      <p class="category-label">Durée d’une manche :</p>
+      <div id="duration-buttons" class="duration-grid"></div> 
+
       <button id="start-button">Démarrer</button>
     </section>
 
+
     <section id="game-screen" class="screen">
+      <div id="countdown" class="countdown hidden">
+        <p id="countdown-number">3</p>
+      </div>
+
       <div class="top-bar">
         <p>Temps : <span id="time">60</span>s</p>
         <p>Score : <span id="score">0</span></p>
       </div>
+
+      <p id="active-team" class="active-team">Mode collectif</p>
+      <div id="team-scoreboard" class="team-scoreboard"></div>
+
+      <p class="category-display">Catégorie : <span id="current-category">?</span></p>
 
       <div id="word-card">
         <p id="word">Mot</p>
@@ -36,12 +61,24 @@
         <button id="pass-button" class="secondary">Passer</button>
         <button id="correct-button">Correct</button>
       </div>
+
+      <button id="undo-button" class="undo-button">Annuler la dernière réponse</button>
+      <button id="finish-match-button" class="danger-button">Terminer les équipes</button>
     </section>
 
+
     <section id="end-screen" class="screen">
-      <h2>Partie terminée !</h2>
-      <p>Score final : <span id="final-score">0</span></p>
-      <button id="restart-button">Rejouer</button>
+      <h2 id="end-title">Partie terminée !</h2>
+
+      <p id="round-score-text" class="round-score">
+        Score du tour : <span id="final-score">0</span>
+      </p>
+
+      <div id="final-results" class="final-results"></div>
+
+      <button id="next-team-button">Équipe suivante</button>
+      <button id="final-results-button">Voir les résultats finaux</button>
+      <button id="restart-button">Retour au menu</button>
     </section>
   </main>
 
