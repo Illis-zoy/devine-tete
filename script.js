@@ -4595,3 +4595,15 @@ restartButton.addEventListener("click", returnToStart);
 nextTeamButton.addEventListener("click", nextTeamTurn);
 finalResultsButton.addEventListener("click", showFinalResults);
 finishMatchButton.addEventListener("click", showFinalResults);
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => {
+        console.log("Service worker enregistré");
+      })
+      .catch((error) => {
+        console.error("Erreur service worker :", error);
+      });
+  });
+}
